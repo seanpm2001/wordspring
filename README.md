@@ -12,6 +12,7 @@ The master variable in the pattern language is `P`.  `P` is normally a quasiquot
 * `(| pat pats ...)`: selects a random pattern from `(pat pats ...)` and interprets it.
 * `(pat pats ...)`: interprets each of `(pat pats ...)` in turn and concatenates them as a string.
 * `'symbol`: turns into a string
+* `()`: turns into nothing
 
 This simple language makes it surprisingly easy to make words of various classes, structures, etc.  In the pattern that comes with the script, the `C` pattern represents consonants, the `V` pattern vowels, the `E` pattern endings for small words, and the `S` pattern syllables.  These are all combined in the `P` variable which is then fed to the pattern interpreter.
 
