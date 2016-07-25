@@ -1,4 +1,3 @@
-; -*- hy -*-
 (require hy.contrib.loop)
 (import [random               [choice]]
         [functools            [partial]]
