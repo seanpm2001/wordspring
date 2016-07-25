@@ -11,21 +11,22 @@
   (instance? HyExpression obj))
 
 (defn interp [unit]
-  (if (symbol? unit)
-        (string unit)
-      (expr? unit)
-        (if (= '| (first unit))
-              (->
-                (rest unit)
-                (list)
-                (choice)
-                (interp))
-            (reduce
-              (fn [acc unit]
-                (+ acc (interp unit)))
-              unit
-              ""))
-      ""))
+  (loop [[unit unit]]
+    (if (symbol? unit)
+          (string unit)
+        (expr? unit)
+          (if (= '| (first unit))
+                (->
+                  (rest unit)
+                  (list)
+                  (choice)
+                  (recur))
+              (reduce
+                (fn [acc unit]
+                  (+ acc (interp unit)))
+                unit
+                ""))
+        "")))
 
 (defmain [&rest args]
   (let [C '(| k g t d f v s z m n l r q x p b)
