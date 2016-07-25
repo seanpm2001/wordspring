@@ -6,8 +6,7 @@
 (defn each [proc it]
   (for [x it] (proc x)))
 
-(defn expr? [obj]
-  (instance? HyExpression obj))
+(def expr? (partial instance? HyExpression))
 
 (defn interp [unit]
   (loop [[unit unit]]
