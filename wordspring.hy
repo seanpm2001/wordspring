@@ -1,20 +1,17 @@
 (require hy.contrib.loop)
-(import [random               [choice]]
-        [functools            [partial]]
-        [hy.models.expression [HyExpression]])
+(import [random    [choice]]
+        [functools [partial]])
 
 (defn each [proc it]
   (for [x it] (proc x)))
-
-(def expr? (partial instance? HyExpression))
 
 (defn interp [unit]
   (loop [[unit unit]]
     (if (symbol? unit)
           (string unit)
-        (and (expr? unit) (empty? unit))
+        (and (iterable? unit) (empty? unit))
           ""
-        (expr? unit)
+        (and (iterable? unit) (not (empty? unit)))
           (if (= '| (first unit))
                 (->
                   (rest unit)
@@ -30,7 +27,7 @@
 
 (defmain [&rest args]
   (let [C '(| k g t d f v s z m n l r q x p b)
-        V '(| a e i o u o ö)
+        V `(| ~@(repeat 'a 10) e i o u o ö)
         E '(| st th fth ft lk lg ())
         S `(~C ~V)
         P `(| (~S ~S ~S) (~S ~S) (~S ~E))]
